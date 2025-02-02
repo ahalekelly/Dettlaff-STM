@@ -1,0 +1,3 @@
+[submodule "Dettlaff"]
+	path = Dettlaff
+	url = https://github.com/ahalekelly/Dettlaff.git
