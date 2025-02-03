@@ -1,6 +1,11 @@
 #include "platform.h"
 
 #include "common/time.h"
+#include "common/utils.h"
+#include "config/feature.h"
+#include "scheduler/scheduler.h"
+#include "pg/dettlaff_params.h"
+#include "drivers/motor.h"
 #include "flywheel_control.h"
 #include "drivers/motor.h"
 #include "pg/dettlaff_params.h"  // Assume our custom parameters (like flywheel_target) are defined here

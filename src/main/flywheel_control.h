@@ -2,6 +2,7 @@
 #define FLYWHEEL_CONTROL_H
 
 #include <stdint.h>
+#include "common/time.h"
 
 // Initialize flywheel control (if any initialization is needed)
 void flywheelControlInit(void);
