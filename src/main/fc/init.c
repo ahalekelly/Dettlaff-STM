@@ -103,6 +103,7 @@
 #include "flight/position.h"
 #include "flight/servos.h"
 
+#include "flywheel_control.h"
 #include "io/asyncfatfs/asyncfatfs.h"
 #include "io/beeper.h"
 #include "io/dashboard.h"
