@@ -1,5 +1,6 @@
 #include "platform.h"
 
+#include "drivers/time.h"
 #include "common/time.h"
 #include "common/utils.h"
 #include "config/feature.h"
