@@ -93,7 +93,7 @@
 #include "fc/runtime_config.h"
 #include "fc/stats.h"
 #include "fc/tasks.h"
-#include "fc/flywheel_control.h"
+#include "fc/flywheelControl/flywheel_control.h"
 
 #include "flight/failsafe.h"
 #include "flight/imu.h"
