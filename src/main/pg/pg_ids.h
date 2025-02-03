@@ -156,7 +156,9 @@
 #define PG_SCHEDULER_CONFIG         556
 #define PG_MSP_CONFIG               557
 #define PG_SOFTSERIAL_PIN_CONFIG    558
-#define PG_BETAFLIGHT_END           558
+
+#define PG_DETTLAFF_PARAMS 560
+#define PG_BETAFLIGHT_END 560
 
 
 // OSD configuration (subject to change)
@@ -169,3 +171,4 @@
 #define PG_RESERVED_FOR_TESTING_1 4095
 #define PG_RESERVED_FOR_TESTING_2 4094
 #define PG_RESERVED_FOR_TESTING_3 4093
+
