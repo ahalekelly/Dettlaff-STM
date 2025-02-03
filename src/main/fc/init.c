@@ -93,6 +93,7 @@
 #include "fc/runtime_config.h"
 #include "fc/stats.h"
 #include "fc/tasks.h"
+
 #include "flywheel_control.h"
 
 #include "flight/failsafe.h"
@@ -104,7 +105,6 @@
 #include "flight/position.h"
 #include "flight/servos.h"
 
-#include "flywheel_control.h"
 #include "io/asyncfatfs/asyncfatfs.h"
 #include "io/beeper.h"
 #include "io/dashboard.h"
