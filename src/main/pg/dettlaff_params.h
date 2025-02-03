@@ -7,9 +7,7 @@
 
 typedef struct dettlaffParams_s {
     // Motor Settings
-    uint16_t motorSpeedDefault;     // Default motor speed (0-2000)
-    uint16_t motorSpeedMax;         // Maximum allowed motor speed
-    uint8_t  motorCount;            // Number of motors (1-8)
+    float throttleValue;
     uint8_t  reverseMotorDir;       // Reverse motor direction (0/1)
 
     // Flywheel Settings
@@ -23,12 +21,10 @@ typedef struct dettlaffParams_s {
     // Motor Control Settings
     int32_t  motorKv;                   // Motor velocity constant
     int32_t  idleRPM[4];               // Idle RPM for each motor
-    uint8_t  dshotMode;                // Dshot mode (0=DSHOT150, 1=DSHOT300, 2=DSHOT600, 3=OFF)
-    uint8_t  brushedFlywheels;         // 1 = brushed, 0 = brushless
 
     // Closed Loop Settings
-    uint8_t  motors[4];                 // Which motors are hooked up (1=true, 0=false)
-    uint16_t flywheel_control_rate;     // Control loop frequency in Hz
+    bool  motors[4];                 // Which motors are hooked up (1=true, 0=false)
+    uint16_t flywheelControlFreq;     // Control loop frequency in Hz
     uint8_t  timeOverrideWhenIdling;    // 1 = true, 0 = false
     int32_t  fullThrottleRpmTolerance;  // Tolerance for full throttle override
     int32_t  firingRPMTolerance;        // Tolerance for firing dart
@@ -53,7 +49,6 @@ typedef struct dettlaffParams_s {
     // System Settings
     uint8_t  printTelemetry;            // Enable telemetry (1=yes, 0=no)
     uint32_t lowVoltageCutoff_mv;       // Battery cutoff voltage (mV)
-    float    voltageCalibrationFactor;  // Battery voltage calibration factor
 
     // Input Pins (set to 0 if not used)
     uint8_t triggerSwitchPin;

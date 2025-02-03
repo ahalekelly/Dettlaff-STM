@@ -7,9 +7,7 @@ PG_REGISTER_WITH_RESET_TEMPLATE(dettlaffParams_t, dettlaffParams, PG_DETTLAFF_PA
 
 PG_RESET_TEMPLATE(dettlaffParams_t, dettlaffParams,
     // Motor Settings
-    .motorSpeedDefault = 1000,      // 50% speed by default
-    .motorSpeedMax = 2000,          // Maximum motor speed
-    .motorCount = 2,                // Default to 2 motors
+    .throttleValue = 0.2f,
     .reverseMotorDir = 0,           // Normal motor direction
 
     // Flywheel Settings
@@ -23,11 +21,10 @@ PG_RESET_TEMPLATE(dettlaffParams_t, dettlaffParams,
     // Motor Control Settings
     .motorKv = 3200,
     .idleRPM = { 500, 500, 500, 500 },
-    .dshotMode = 1,               // DSHOT300
-    .brushedFlywheels = 0,
 
     // Closed Loop Settings
     .motors = { 1, 1, 1, 1 },
+    .flywheelControlFreq = 1000,
     .timeOverrideWhenIdling = 1,
     .fullThrottleRpmTolerance = 5000,
     .firingRPMTolerance = 10000,
@@ -52,7 +49,6 @@ PG_RESET_TEMPLATE(dettlaffParams_t, dettlaffParams,
     // System Settings
     .printTelemetry = 0,
     .lowVoltageCutoff_mv = 10000,  // 2500*4
-    .voltageCalibrationFactor = 1.0f,
 
     // Input Pins
     .triggerSwitchPin = 32,
