@@ -6,8 +6,23 @@
 // – Reads desired flywheel speed from our custom parameters (flywheel_target, expected normalized 0.0–1.0)
 // – Computes a command between motorConfig()->minthrottle and motorConfig()->maxthrottle
 // – Writes the same command to all ESC outputs (thus preserving ESC passthrough)
+FAST_CODE bool checkFlywheelControlUpdate(timeUs_t currentTimeUs, timeDelta_t currentDeltaTimeUs)
+{
+    UNUSED(currentDeltaTimeUs);
+    static timeUs_t lastCalled = 0;
+    const timeDelta_t interval = TASK_PERIOD_US(1000);
+    
+    if (currentTimeUs - lastCalled >= interval) {
+        lastCalled = currentTimeUs;
+        return true;
+    }
+    return false;
+}
+
 void flywheelControlInit(void) {
-    // Any one-time initialization of the flywheel controller
+    if (featureIsEnabled(FEATURE_FLYWHEEL)) {
+        rescheduleTask(TASK_FLYWHEEL, dettlaffParams()->flywheel_control_rate);
+    }
 }
 
 void flywheelControlLoop(uint32_t currentTimeUs) {

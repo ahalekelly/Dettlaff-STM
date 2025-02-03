@@ -28,6 +28,7 @@ typedef struct dettlaffParams_s {
 
     // Closed Loop Settings
     uint8_t  motors[4];                 // Which motors are hooked up (1=true, 0=false)
+    uint16_t flywheel_control_rate;     // Control loop frequency in Hz
     uint8_t  timeOverrideWhenIdling;    // 1 = true, 0 = false
     int32_t  fullThrottleRpmTolerance;  // Tolerance for full throttle override
     int32_t  firingRPMTolerance;        // Tolerance for firing dart

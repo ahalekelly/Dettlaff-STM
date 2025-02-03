@@ -531,6 +531,9 @@ void init(void)
 
     mixerInit(mixerConfig()->mixerMode);
 
+    // Flywheel Control Initialization  
+    flywheelControlInit();
+
     uint16_t idlePulse = motorConfig()->mincommand;
     if (featureIsEnabled(FEATURE_3D)) {
         idlePulse = flight3DConfig()->neutral3d;
