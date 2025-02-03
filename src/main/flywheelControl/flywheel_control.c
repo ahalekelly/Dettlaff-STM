@@ -31,9 +31,7 @@ FAST_CODE bool checkFlywheelControlUpdate(timeUs_t currentTimeUs, timeDelta_t cu
 
 void flywheelControlInit(void) {
     cliDebugPrintf("flywheelControlInit running");
-    if (featureIsEnabled(FEATURE_FLYWHEEL)) {
-        rescheduleTask(TASK_FLYWHEEL, dettlaffParams()->flywheelControlFreq);
-    }
+    rescheduleTask(TASK_FLYWHEEL, dettlaffParams()->flywheelControlFreq);
 }
 
 void flywheelControlLoop(uint32_t currentTimeUs) {
