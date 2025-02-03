@@ -10,4 +10,7 @@ void flywheelControlInit(void);
 // currentTimeUs is in microseconds.
 void flywheelControlLoop(uint32_t currentTimeUs);
 
+// Check if it's time to update the flywheel control
+bool checkFlywheelControlUpdate(timeUs_t currentTimeUs, timeDelta_t currentDeltaTimeUs);
+
 #endif // FLYWHEEL_CONTROL_H
