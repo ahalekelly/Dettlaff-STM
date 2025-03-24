@@ -18,6 +18,8 @@ For direct motor control without flight controller complexity, use the Motor Dri
 - Simple normalized values (0.0-1.0)
 - Key functions: motorDevInit(), motorWriteAll(), stopMotors()
 
+We are going to disable all Mixer code and replace it with our Dettlaff code.
+
 ## Parameter System
 
 Parameters in Betaflight are organized into Parameter Groups (PGs):
