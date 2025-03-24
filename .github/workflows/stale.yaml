@@ -1,8 +1,10 @@
 name: Stale Issues and PRs
 
 on:
-  schedule:
-    - cron: 30 4 * * *
+  # Disabled daily schedule
+  # schedule:
+  #   - cron: 30 4 * * *
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   stale:

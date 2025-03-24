@@ -3,8 +3,10 @@ name: No Response
 on:
   issue_comment:
     types: [created]
-  schedule:
-    - cron: 0 4 * * *
+  # Disabled daily schedule
+  # schedule:
+  #   - cron: 0 4 * * *
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   no-response:
