@@ -80,9 +80,9 @@ LAYOUT_FILE            =
 CITE_BIB_FILES         =
 
 # Input files
-INPUT                  = src lib
+INPUT                  = src docs/mainpage.md
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.c *.h *.cpp *.hpp
+FILE_PATTERNS          = *.c *.h *.cpp *.hpp *.md
 RECURSIVE              = YES
 EXCLUDE                =
 EXCLUDE_SYMLINKS       = NO
