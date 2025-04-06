@@ -180,6 +180,10 @@ typedef enum {
     TASK_RC_STATS,
 #endif
 
+// Dettlaff - Add task ID unconditionally
+    TASK_DETTLAFF,
+// Dettlaff - End
+
     /* Count of real tasks */
     TASK_COUNT,
 

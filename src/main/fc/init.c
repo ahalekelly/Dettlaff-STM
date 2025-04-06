@@ -180,6 +180,8 @@
 void targetPreInit(void);
 #endif
 
+#include "dettlaff/dettlaff.h"
+
 uint8_t systemState = SYSTEM_STATE_INITIALISING;
 
 #ifdef BUS_SWITCH_PIN
@@ -873,6 +875,8 @@ void init(void)
     // Initialize MSP
     mspInit();
     mspSerialInit();
+
+dettlaffInit();
 
 /*
  * CMS, display devices and OSD

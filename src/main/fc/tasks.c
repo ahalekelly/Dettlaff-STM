@@ -107,6 +107,8 @@
 #include "io/usb_cdc_hid.h"
 #endif
 
+#include "dettlaff/dettlaff.h"
+
 #include "tasks.h"
 
 // taskUpdateRxMain() has occasional peaks in execution time so normal moving average duration estimation doesn't work
@@ -454,6 +456,11 @@ task_attribute_t task_attributes[TASK_COUNT] = {
     [TASK_RC_STATS] = DEFINE_TASK("RC_STATS", NULL, NULL, rcStatsUpdate, TASK_PERIOD_HZ(100), TASK_PRIORITY_LOW),
 #endif
 
+#ifdef USE_GIMBAL
+    [TASK_GIMBAL] = DEFINE_TASK("GIMBAL", NULL, NULL, gimbalUpdate, TASK_PERIOD_HZ(100), TASK_PRIORITY_MEDIUM),
+#endif
+
+    [TASK_DETTLAFF] = DEFINE_TASK("DETTLAFF", NULL, NULL, dettlaffUpdate, TASK_PERIOD_HZ(1000), TASK_PRIORITY_HIGH),
 };
 
 task_t *getTask(unsigned taskId)
@@ -629,4 +636,10 @@ void tasksInit(void)
 #ifdef USE_RC_STATS
     setTaskEnabled(TASK_RC_STATS, true);
 #endif
+
+#ifdef USE_GIMBAL
+    setTaskEnabled(TASK_GIMBAL, true);
+#endif
+
+    setTaskEnabled(TASK_DETTLAFF, true);
 }
