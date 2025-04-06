@@ -115,8 +115,8 @@
 #include "io/ledstrip.h"
 #include "io/pidaudio.h"
 #include "io/piniobox.h"
-#include "io/rcdevice_cam.h"
-#include "io/serial.h"
+#include "io/rcdevice.h"
+#include "io/serial_4way.h"
 #include "io/transponder_ir.h"
 #include "io/vtx.h"
 #include "io/vtx_control.h"
@@ -865,7 +865,6 @@ void init(void)
     batteryInit(); // always needs doing, regardless of features.
 
 #ifdef USE_RCDEVICE
-    rcdeviceInit();
 #endif // USE_RCDEVICE
 
 #ifdef USE_PERSISTENT_STATS

@@ -30,3 +30,10 @@ bool taskUpdateRxMainInProgress();
 
 // The taskId_e enum is defined in scheduler/scheduler.h
 // Make sure any new task IDs are added there.
+/*
+void tasksInitData(void);
+void tasksInit(void);
+task_t *getTask(unsigned taskId);
+
+bool taskUpdateRxMainInProgress(void);
+*/
