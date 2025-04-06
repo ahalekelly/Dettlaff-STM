@@ -192,6 +192,10 @@ typedef enum {
     TASK_GIMBAL,
 #endif
 
+// Dettlaff - Add task ID unconditionally
+    TASK_DETTLAFF,
+// Dettlaff - End
+
     /* Count of real tasks */
     TASK_COUNT,
 
