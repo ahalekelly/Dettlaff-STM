@@ -20,6 +20,7 @@
 #include "drivers/motor.h"
 #include "drivers/system.h"
 #include "drivers/resource.h" // For resourceOwner_e (OWNER_SYSTEM)
+#include "drivers/dshot.h" // For DShot telemetry functions
 #include "io/beeper.h" // For beeper() and BEEPER_RX_SET
 #include "sensors/battery.h"
 #include "flight/mixer.h" // For access to the 'motor' array
@@ -342,6 +343,17 @@ void dettlaffInit(void)
         }
     }
     
+    // Log whether bidirectional DShot is available
+    bool hasBidirDshot = isMotorProtocolDshot() && isMotorProtocolBidirDshot();
+    DETTLAFF_DEBUG_PRINTF("Bidirectional DShot %s\n", hasBidirDshot ? "ENABLED" : "DISABLED");
+    if (hasBidirDshot) {
+        DETTLAFF_DEBUG_PRINTF("RPM telemetry will be available for motors\n");
+    } else if (flywheelControl != OPEN_LOOP_CONTROL) {
+        DETTLAFF_DEBUG_PRINTF("WARNING: Using %s control mode but bidirectional DShot is not enabled!\n",
+            flywheelControl == TWO_LEVEL_CONTROL ? "TWO_LEVEL" : "PID");
+        DETTLAFF_DEBUG_PRINTF("RPM control will not work correctly without telemetry\n");
+    }
+    
     pusherDriver.coast(); // Ensure pusher is in coast state initially
     
     printf("Dettlaff module initialized (Battery: %lu mV)\n", (unsigned long)batteryVoltage_mv);
@@ -362,6 +374,16 @@ void dettlaffUpdate(uint32_t currentTimeUs)
     updateFiringMode();
     burstLength = burstLengthSet[firingMode];
     burstMode = burstModeSet[firingMode];
+    
+    // 3. Read DShot telemetry data (RPM)
+    if (isMotorProtocolDshot() && isMotorProtocolBidirDshot()) {
+        for (int i = 0; i < 4; i++) {
+            if (motorsPresent[i] && isDshotMotorTelemetryActive(i)) {
+                motorRPM[i] = (int32_t)getDshotRpm(i);
+                DETTLAFF_DEBUG_PRINTF("Motor %d RPM: %ld\n", i, (long)motorRPM[i]);
+            }
+        }
+    }
     
     // 3. Handle trigger logic
     // Binary mode: pulled AND released within timeout

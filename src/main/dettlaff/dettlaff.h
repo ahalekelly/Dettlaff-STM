@@ -70,3 +70,6 @@ typedef struct {
 #else
 #define DETTLAFF_DEBUG_PRINTF(...) ((void)0)
 #endif
+
+// Define maximum value for debug printing of telemetry
+#define DETTLAFF_MAX_DEBUG_RPM 50000
