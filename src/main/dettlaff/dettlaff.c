@@ -324,7 +324,7 @@ void dettlaffInit(void)
     
     // Initialize motor RPM settings
     for (int i = 0; i < 4; i++) {
-        if (motors[i]) {
+        if (motorsPresent[i]) {
             revRPM[i] = revRPMset[fpsMode][i];
             firingRPM[i] = MAX(revRPM[i] - firingRPMTolerance, minFiringRPM);
             fullThrottleRpmThreshold[i] = revRPM[i] - fullThrottleRpmTolerance;
@@ -337,7 +337,7 @@ void dettlaffInit(void)
     
     // Initialize flywheel motors to off
     for (int i = 0; i < 4; i++) {
-        if (motors[i]) {
+        if (motorsPresent[i]) {
             motor[i] = 0.0f; // Motors off (0.0f)
         }
     }
@@ -398,7 +398,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
                 DETTLAFF_DEBUG_PRINTF("Battery low, shutting down! %lu mV\n", (unsigned long)batteryVoltage_mv);
                 // We can't deep sleep like ESP32, but we can put the motors in a safe state
                 for (int i = 0; i < 4; i++) {
-                    if (motors[i]) {
+                    if (motorsPresent[i]) {
                         motor[i] = 0.0f; // Motor off
                     }
                 }
@@ -421,7 +421,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
                 }
                 
                 for (int i = 0; i < 4; i++) {
-                    if (motors[i]) {
+                    if (motorsPresent[i]) {
                         targetRPM[i] = MAX(targetRPM[i] - ((int32_t)((currentSpindownSpeed * loopTime_us) / 1000)), 
                                            idleRPM[i]);
                     }
@@ -433,7 +433,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
                 }
                 
                 for (int i = 0; i < 4; i++) {
-                    if (motors[i] && targetRPM[i] != 0) {
+                    if (motorsPresent[i] && targetRPM[i] != 0) {
                         targetRPM[i] = MAX(targetRPM[i] - ((int32_t)((currentSpindownSpeed * loopTime_us) / 1000)), 0);
                     }
                 }
@@ -448,10 +448,10 @@ void dettlaffUpdate(uint32_t currentTimeUs)
                 time_ms > lastRevTime_ms + (fromIdle ? minFiringDelayIdleSet_ms[fpsMode] : minFiringDelaySet_ms[fpsMode])) {
                 
                 // Check if all active motors have reached firing RPM
-                if ((!motors[0] || motorRPM[0] > firingRPM[0]) &&
-                    (!motors[1] || motorRPM[1] > firingRPM[1]) &&
-                    (!motors[2] || motorRPM[2] > firingRPM[2]) &&
-                    (!motors[3] || motorRPM[3] > firingRPM[3])) {
+                if ((!motorsPresent[0] || motorRPM[0] > firingRPM[0]) &&
+                    (!motorsPresent[1] || motorRPM[1] > firingRPM[1]) &&
+                    (!motorsPresent[2] || motorRPM[2] > firingRPM[2]) &&
+                    (!motorsPresent[3] || motorRPM[3] > firingRPM[3])) {
                     
                     flywheelState = STATE_FULLSPEED;
                     fromIdle = true;
@@ -467,10 +467,10 @@ void dettlaffUpdate(uint32_t currentTimeUs)
             // Check if open-loop control or override is ready to fire
             if ((flywheelControl == OPEN_LOOP_CONTROL || 
                  (timeOverrideWhenIdling && fromIdle &&
-                  (!motors[0] || motorRPM[0] > 100) &&
-                  (!motors[1] || motorRPM[1] > 100) &&
-                  (!motors[2] || motorRPM[2] > 100) &&
-                  (!motors[3] || motorRPM[3] > 100))) && 
+                  (!motorsPresent[0] || motorRPM[0] > 100) &&
+                  (!motorsPresent[1] || motorRPM[1] > 100) &&
+                  (!motorsPresent[2] || motorRPM[2] > 100) &&
+                  (!motorsPresent[3] || motorRPM[3] > 100))) && 
                 time_ms > lastRevTime_ms + (fromIdle ? firingDelayIdleSet_ms[fpsMode] : firingDelaySet_ms[fpsMode])) {
                 
                 flywheelState = STATE_FULLSPEED;
@@ -594,7 +594,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
     switch (flywheelControl) {
         case PID_CONTROL:
             for (int i = 0; i < 4; i++) {
-                if (motors[i]) {
+                if (motorsPresent[i]) {
                     PIDError[i] = targetRPM[i] - motorRPM[i];
                     
                     PIDOutput[i] = KP * PIDError[i] + 
@@ -619,7 +619,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
             
         case TWO_LEVEL_CONTROL:
             for (int i = 0; i < 4; i++) {
-                if (motors[i]) {
+                if (motorsPresent[i]) {
                     if (targetRPM[i] == revRPM[i] && motorRPM[i] < fullThrottleRpmThreshold[i]) {
                         throttleValue[i] = 1.0f; // Full throttle when below threshold
                     } else {
@@ -631,7 +631,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
             
         case OPEN_LOOP_CONTROL:
             for (int i = 0; i < 4; i++) {
-                if (motors[i]) {
+                if (motorsPresent[i]) {
                     throttleValue[i] = MAX(MIN(1.0f, targetRPM[i] / batteryVoltage_mv * 1000 / motorKv), 0.0f);
                 }
             }
@@ -640,7 +640,7 @@ void dettlaffUpdate(uint32_t currentTimeUs)
     
     // 7. Update Motor Outputs
     for (int i = 0; i < 4; i++) {
-        if (motors[i]) {
+        if (motorsPresent[i]) {
             // Set motor values directly as floats
             motor[i] = throttleValue[i];
         }

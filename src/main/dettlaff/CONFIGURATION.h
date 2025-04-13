@@ -1,6 +1,5 @@
 #pragma once
 
-#include "drivers/motor_types.h" // For motorProtocol_e
 #include "drivers/io_types.h"    // For ioTag_t
 #include "drivers/io_def.h"      // For IO_TAG macro
 
@@ -68,7 +67,7 @@ typedef enum {
 flywheelControlType_t flywheelControl = OPEN_LOOP_CONTROL;
 
 // Which motors are hooked up
-const bool motors[4] = {true, true, true, true};
+const bool motorsPresent[4] = {true, true, true, true};
 
 // While idling, fire pusher after firingDelay_ms even before flywheels are up to speed
 bool timeOverrideWhenIdling = true;
